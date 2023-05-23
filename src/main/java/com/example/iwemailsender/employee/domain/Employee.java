@@ -19,4 +19,13 @@ public class Employee extends BaseEntity {
     private String email;
     @Column(name = "role", nullable = false, length = 50)
     private String role;
+
+    public Employee(String name, String email, String role) {
+        this.name = name;
+        this.email = email;
+        this.role = role;
+    }
+
+    public Employee() {
+    }
 }

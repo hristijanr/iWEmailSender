@@ -27,4 +27,14 @@ public class ScheduledEmail extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
+
+    public ScheduledEmail(String recipientEmail, LocalDateTime sendDate, EmailTemplate emailTemplate, Employee employee) {
+        this.recipientEmail = recipientEmail;
+        this.sendDate = sendDate;
+        this.emailTemplate = emailTemplate;
+        this.employee = employee;
+    }
+
+    public ScheduledEmail() {
+    }
 }

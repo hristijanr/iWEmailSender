@@ -23,4 +23,12 @@ public class EmailTemplate extends BaseEntity {
     @Column(name = "template",nullable = false, columnDefinition = "TEXT")
     private String template;
 
+    public EmailTemplate(String name, String subject, String template) {
+        this.name = name;
+        this.subject = subject;
+        this.template = template;
+    }
+
+    public EmailTemplate() {
+    }
 }
