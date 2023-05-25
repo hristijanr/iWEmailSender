@@ -1,7 +1,5 @@
 package com.example.iwemailsender.scheduled_email.service.impl;
 
-import com.example.iwemailsender.employee.domain.Employee;
-import com.example.iwemailsender.employee.dto.EmployeePojo;
 import com.example.iwemailsender.infrastructure.exception.ResourceNotFoundException;
 import com.example.iwemailsender.scheduled_email.domain.ScheduledEmail;
 import com.example.iwemailsender.scheduled_email.dto.ScheduledEmailPojo;

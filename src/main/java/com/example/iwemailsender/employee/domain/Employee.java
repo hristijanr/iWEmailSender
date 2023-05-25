@@ -7,6 +7,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity
@@ -19,11 +21,16 @@ public class Employee extends BaseEntity {
     private String email;
     @Column(name = "role", nullable = false, length = 50)
     private String role;
-
-    public Employee(String name, String email, String role) {
+    @Column(name = "start_data", nullable = false)
+    private LocalDateTime startDate;
+    @Column(name = "end_date")
+    private LocalDateTime endDate;
+    public Employee(String name, String email, String role, LocalDateTime startDate, LocalDateTime endDate) {
         this.name = name;
         this.email = email;
         this.role = role;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public Employee() {

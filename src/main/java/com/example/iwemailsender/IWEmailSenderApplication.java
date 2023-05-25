@@ -6,7 +6,6 @@ import com.example.iwemailsender.scheduled_email.repository.ScheduledEmailReposi
 import com.example.iwemailsender.email_sender.domain.EmailSender;
 import com.example.iwemailsender.email_sender.service.EmailSenderService;
 import com.example.iwemailsender.email_template.domain.EmailTemplate;
-import com.example.iwemailsender.email_template.service.EmailTemplateService;
 import com.example.iwemailsender.employee.domain.Employee;
 import com.example.iwemailsender.scheduled_email.domain.ScheduledEmail;
 import org.modelmapper.ModelMapper;
@@ -16,9 +15,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
-
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.Month;
 
 @SpringBootApplication
 public class IWEmailSenderApplication {
@@ -47,7 +46,12 @@ public class IWEmailSenderApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void initializeData() {
-        Employee employee = new Employee("Hristijan Rahmanov", "hristijanrahmanov9595@gmail.com", "Backend Developer");
+        Employee employee = new Employee("Hristijan Rahmanov", "hristijanrahmanov9595@gmail.com", "Backend Developer",
+                LocalDate.of(2021, Month.JULY, 20).atStartOfDay(), null);
+
+        //proverka za dali pravilno raboti uslovot za endDate
+        //        LocalDate.of(2021, Month.JULY, 20).atStartOfDay(), LocalDate.of(2021, Month.JULY, 20).atStartOfDay());
+
         employeeRepository.save(employee);
 
         EmailTemplate emailTemplate = new EmailTemplate("Test email", "Test subject", "Dear " + employee.getName() + "\n" + "" +
@@ -58,7 +62,15 @@ public class IWEmailSenderApplication {
         scheduledEmailRepository.save(scheduledEmail);
 
         if (employee != null && emailTemplate != null && scheduledEmail != null) {
+            if (employee.getEndDate() != null){
+                if (employee.getEndDate().isBefore(LocalDateTime.now())){
+                    throw new IllegalArgumentException("This employee no longer works at the company.");
+                }
+            }
             if (employee.getRole().equals("Backend Developer")) {
+                EmailSender emailSender = new EmailSender();
+                emailSenderService.sendEmail(scheduledEmail.getRecipientEmail(), emailTemplate.getSubject(), emailTemplate.getTemplate());
+            } else if (employee.getRole().equals("Frontend Developer")) {
                 EmailSender emailSender = new EmailSender();
                 emailSenderService.sendEmail(scheduledEmail.getRecipientEmail(), emailTemplate.getSubject(), emailTemplate.getTemplate());
             } else throw new IllegalArgumentException("Employee role is not Backend Developer");
