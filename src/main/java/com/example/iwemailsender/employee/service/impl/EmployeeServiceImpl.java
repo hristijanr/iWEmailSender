@@ -1,12 +1,10 @@
 package com.example.iwemailsender.employee.service.impl;
 
-import com.example.iwemailsender.email_template.domain.EmailTemplate;
-import com.example.iwemailsender.email_template.dto.EmailTemplatePojo;
 import com.example.iwemailsender.employee.domain.Employee;
 import com.example.iwemailsender.employee.dto.EmployeePojo;
 import com.example.iwemailsender.employee.mapper.EmployeeMapper;
 import com.example.iwemailsender.employee.service.EmployeeService;
-import com.example.iwemailsender.employee.repository.EmpolyeeRepository;
+import com.example.iwemailsender.employee.repository.EmployeeRepository;
 import com.example.iwemailsender.infrastructure.exception.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +18,7 @@ import java.util.List;
 @Slf4j
 public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
-    EmpolyeeRepository empolyeeRepository;
+    EmployeeRepository empolyeeRepository;
     @Autowired
     EmployeeMapper employeeMapper;
 
@@ -76,4 +74,5 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee targetEmployee = findByUuid(uuid);
         empolyeeRepository.delete(targetEmployee);
     }
+
 }
