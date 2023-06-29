@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface EmployeeService {
     public EmployeePojo findById(Long id);
     public EmployeePojo getByUuid(String uuid);
@@ -15,9 +14,9 @@ public interface EmployeeService {
 
     public List<EmployeePojo> getAll();
 
-    public EmployeePojo createTemplate(EmployeePojo employeePojo);
+    public EmployeePojo createEmployee(EmployeePojo employeePojo);
 
-    public EmployeePojo updateTemplate(String uuid, EmployeePojo employeePojo);
+    public EmployeePojo updateEmployee(String uuid, EmployeePojo employeePojo);
 
     public void removeEmployee(String uuid);
 

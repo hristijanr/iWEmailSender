@@ -24,15 +24,23 @@ public class ScheduledEmail extends BaseEntity {
     @JoinColumn(name = "template_id", nullable = false)
     private EmailTemplate emailTemplate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
-    public ScheduledEmail(String recipientEmail, LocalDateTime sendDate, EmailTemplate emailTemplate, Employee employee) {
+    @Column(name = "retry_limit")
+    private int retryLimit;
+
+    @Column(name = "frequency", length = 11)
+    private String frequency;
+
+    public ScheduledEmail(String recipientEmail, LocalDateTime sendDate, EmailTemplate emailTemplate, Employee employee, int retryLimit, String frequency) {
         this.recipientEmail = recipientEmail;
         this.sendDate = sendDate;
         this.emailTemplate = emailTemplate;
         this.employee = employee;
+        this.retryLimit = retryLimit;
+        this.frequency = frequency;
     }
 
     public ScheduledEmail() {

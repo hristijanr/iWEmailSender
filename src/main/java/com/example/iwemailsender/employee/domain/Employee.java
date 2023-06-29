@@ -25,12 +25,15 @@ public class Employee extends BaseEntity {
     private LocalDateTime startDate;
     @Column(name = "end_date")
     private LocalDateTime endDate;
-    public Employee(String name, String email, String role, LocalDateTime startDate, LocalDateTime endDate) {
+    @Column(name = "phone_number", length = 11)
+    private String phoneNumber;
+    public Employee(String name, String email, String role, LocalDateTime startDate, LocalDateTime endDate, String phoneNumber) {
         this.name = name;
         this.email = email;
         this.role = role;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.phoneNumber = phoneNumber;
     }
 
     public Employee() {

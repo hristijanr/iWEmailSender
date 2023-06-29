@@ -13,36 +13,41 @@ import java.util.List;
 @RestController
 @RequestMapping(Endpoints.Employee)
 public class EmployeeController {
+    private final EmployeeService employeeService;
+
     @Autowired
-    EmployeeService employeeService;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     @GetMapping("/{uuid}")
-    public EmployeePojo getByUuid(@PathVariable(value = "uuid")String uuid) {
+    public EmployeePojo getByUuid(@PathVariable(value = "uuid") String uuid) {
         return employeeService.getByUuid(uuid);
-
     }
 
     @GetMapping
-    public List<EmployeePojo> getAll(){
-
+    public List<EmployeePojo> getAll() {
         return employeeService.getAll();
     }
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public EmployeePojo createEmployee(@Valid @RequestBody EmployeePojo employeePojo){
-        return employeeService.createTemplate(employeePojo);
+    public EmployeePojo createEmployee(@Valid @RequestBody EmployeePojo employeePojo) {
+        return employeeService.createEmployee(employeePojo);
     }
 
     @PutMapping("/{uuid}")
     @ResponseStatus(value = HttpStatus.OK)
-    public EmployeePojo updateEmployee(@PathVariable(value = "uuid") String uuid, @Valid @RequestBody EmployeePojo employeePojo){
-        return employeeService.updateTemplate(uuid,employeePojo);
+    public EmployeePojo updateEmployee(
+            @PathVariable(value = "uuid") String uuid,
+            @Valid @RequestBody EmployeePojo employeePojo
+    ) {
+        return employeeService.updateEmployee(uuid, employeePojo);
     }
 
     @DeleteMapping("/{uuid}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void removeEmployee(@PathVariable(value = "uuid") String uuid){
+    public void removeEmployee(@PathVariable(value = "uuid") String uuid) {
         employeeService.removeEmployee(uuid);
     }
 }

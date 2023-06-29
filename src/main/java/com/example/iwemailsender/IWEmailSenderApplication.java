@@ -15,11 +15,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
+
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Month;
+import java.util.*;
+
+import com.github.javafaker.Faker;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
 
 @SpringBootApplication
+@EnableScheduling
 public class IWEmailSenderApplication {
 
     @Autowired
@@ -44,36 +53,21 @@ public class IWEmailSenderApplication {
         return new ModelMapper();
     }
 
+
     @EventListener(ApplicationReadyEvent.class)
     public void initializeData() {
-        Employee employee = new Employee("Hristijan Rahmanov", "hristijanrahmanov9595@gmail.com", "Backend Developer",
-                LocalDate.of(2021, Month.JULY, 20).atStartOfDay(), null);
+//        Employee employee = new Employee("Hristijan Rahmanov", "hristijanrahmanov9595@gmail.com", "Backend Developer",
+//                LocalDate.of(2021, Month.JULY, 20).atStartOfDay(), null, "38977576611");
+//
+//        employeeRepository.save(employee);
+//
+//        EmailTemplate emailTemplate = new EmailTemplate("Second Test email", "Second Test subject", "Dear " + employee.getName() + "\n" + "" +
+//                "bla bla bla bla...");
+//        emailTemplateRepository.save(emailTemplate);
+//
+//        ScheduledEmail scheduledEmail = new ScheduledEmail(employee.getEmail(), LocalDateTime.now(), emailTemplate, employee, 3, "monthly");
+//        scheduledEmailRepository.save(scheduledEmail);
 
-        //proverka za dali pravilno raboti uslovot za endDate
-        //        LocalDate.of(2021, Month.JULY, 20).atStartOfDay(), LocalDate.of(2021, Month.JULY, 20).atStartOfDay());
 
-        employeeRepository.save(employee);
-
-        EmailTemplate emailTemplate = new EmailTemplate("Test email", "Test subject", "Dear " + employee.getName() + "\n" + "" +
-                "bla bla bla bla...");
-        emailTemplateRepository.save(emailTemplate);
-
-        ScheduledEmail scheduledEmail = new ScheduledEmail(employee.getEmail(), LocalDateTime.now(), emailTemplate, employee);
-        scheduledEmailRepository.save(scheduledEmail);
-
-        if (employee != null && emailTemplate != null && scheduledEmail != null) {
-            if (employee.getEndDate() != null){
-                if (employee.getEndDate().isBefore(LocalDateTime.now())){
-                    throw new IllegalArgumentException("This employee no longer works at the company.");
-                }
-            }
-            if (employee.getRole().equals("Backend Developer")) {
-                EmailSender emailSender = new EmailSender();
-                emailSenderService.sendEmail(scheduledEmail.getRecipientEmail(), emailTemplate.getSubject(), emailTemplate.getTemplate());
-            } else if (employee.getRole().equals("Frontend Developer")) {
-                EmailSender emailSender = new EmailSender();
-                emailSenderService.sendEmail(scheduledEmail.getRecipientEmail(), emailTemplate.getSubject(), emailTemplate.getTemplate());
-            } else throw new IllegalArgumentException("Employee role is not Backend Developer");
-        }
     }
 }

@@ -1,0 +1,2 @@
+INSERT INTO "EmailSender".public.employees(name, email, role, uuid, created_on, end_date, start_data, phone_number)
+VALUES ('Hristijan Rahmanov', 'hristijanrahmanov@yahoo.com', 'Backend Developer', gen_random_uuid(), now(), NULL, '2023-01-01', '38977576611');

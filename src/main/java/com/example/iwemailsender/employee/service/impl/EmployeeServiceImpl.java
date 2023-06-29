@@ -52,7 +52,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeePojo createTemplate(EmployeePojo employeePojo){
+    public EmployeePojo createEmployee(EmployeePojo employeePojo){
         log.debug("Execute create employee with parameters ", employeePojo);
         Employee createEmployee = employeeMapper.dtoToEntity(employeePojo);
         Employee savingEmployee = empolyeeRepository.save(createEmployee);
@@ -61,7 +61,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeePojo updateTemplate(String uuid, EmployeePojo employeePojo){
+    public EmployeePojo updateEmployee(String uuid, EmployeePojo employeePojo){
             log.debug("Execute employee with parameter {}", employeePojo);
             Employee targetEmployee = findByUuid(uuid);
             employeeMapper.mapRequestedFieldForUpdate(targetEmployee, employeePojo);

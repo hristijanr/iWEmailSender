@@ -2,6 +2,7 @@ package com.example.iwemailsender.email_template.api;
 
 import com.example.iwemailsender.email_template.dto.EmailTemplatePojo;
 import com.example.iwemailsender.email_template.service.EmailTemplateService;
+import com.example.iwemailsender.employee.service.EmployeeService;
 import com.example.iwemailsender.infrastructure.Endpoints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,8 +14,12 @@ import java.util.List;
 @RestController
 @RequestMapping(Endpoints.EmailTemplate)
 public class EmailTemplateController {
+    private final EmailTemplateService emailTemplateService;
+
     @Autowired
-    EmailTemplateService emailTemplateService;
+    public EmailTemplateController(EmailTemplateService emailTemplateService) {
+        this.emailTemplateService = emailTemplateService;
+    }
 
     @GetMapping("/{uuid}")
     public EmailTemplatePojo getByUuid(@PathVariable(value = "uuid") String uuid){
