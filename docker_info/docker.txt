@@ -1,0 +1,7 @@
+docker pull postgres:latest
+
+docker run --detach --name postgres-iWEmailSender -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=Kjamile123 -e POSTGRES_DB=EmailSender -p 5432:5432 -d postgres:latest
+
+docker stop postgres-iwemailsender
+
+docker start postgres-iwemailsender

@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Kjamile123
+      POSTGRES_DB: EmailSender
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./src/main/resources/sql/ddl.sql:/docker-entrypoint-initdb.d/ddl.sql
